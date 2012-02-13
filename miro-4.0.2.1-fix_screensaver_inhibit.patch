@@ -1,0 +1,46 @@
+From 338fefd19c9b0447dfe79a72bce51b54da9f599d Mon Sep 17 00:00:00 2001
+From: Michel Alexandre Salim <salimma@fedoraproject.org>
+Date: Sun, 31 Jul 2011 21:08:42 +0200
+Subject: [PATCH] Workaround for GNOME 3.0's screensaver
+To: Will Kahn-Greene <will.guaraldi@pculture.org>
+
+GNOME 3.0 has a screensaver that is missing the Inhibit method;
+attempting to inhibit it via DBus results in a DBusException being
+raised.
+
+Until this is fixed upstream, work around this by storing the exception
+as the cookie, and handle this special value  when re-enabling the
+screensaver.
+
+Signed-off-by: Michel Alexandre Salim <salimma@fedoraproject.org>
+---
+ tv/linux/plat/screensaver.py |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/tv/linux/plat/screensaver.py b/tv/linux/plat/screensaver.py
+index ede19c9..afcfc30 100644
+--- a/tv/linux/plat/screensaver.py
++++ b/tv/linux/plat/screensaver.py
+@@ -50,11 +50,18 @@ class GnomeScreenSaverManager(object):
+ 
+         prog = "Miro"
+         reason = "Playing a video"
+-        self.cookie = obj.Inhibit(prog, reason)
++        try:
++            self.cookie = obj.Inhibit(prog, reason)
++        except dbus.DBusException as e:
++            # GNOME 3.0's screensaver lacks the Inhibit method
++            self.cookie = e
+ 
+     def enable(self):
+         if self.cookie is None:
+             raise AssertionError("disable() must be called before enable()")
++        elif type(self.cookie) is dbus.DBusException:
++            self.cookie = None
++            return
+         bus = dbus.SessionBus()
+         obj = bus.get_object('org.gnome.ScreenSaver',
+                              '/org/gnome/ScreenSaver')
+-- 
+1.7.6
+
