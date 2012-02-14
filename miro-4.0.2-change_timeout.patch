@@ -18,7 +18,7 @@ index 529a7c1..ac7546b 100644
          EventLoopTest.tearDown(self)
  
 -    def _wait_for_subprocess_ready(self, timeout=4.0):
-+    def _wait_for_subprocess_ready(self, timeout=6.0):
++    def _wait_for_subprocess_ready(self, timeout=20.0):
          """Wait for the subprocess to startup."""
  
          start = time.time()
