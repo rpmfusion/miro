@@ -1,6 +1,6 @@
 Name:           miro
 Version:        4.0.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Internet TV Player
 
 Group:          Applications/Multimedia
@@ -24,6 +24,8 @@ Patch3:         miro-4.0.2.1-fix_screensaver_inhibit.patch
 # Use provided CFLAGS when building miro-segmenter
 # submitted: https://bugzilla.pculture.org/show_bug.cgi?id=18027
 Patch4:         miro-4.0.2.1-segmenter_cflags.patch
+# terminate DBus after running unit tests
+Patch5:         miro-4.0.6-terminate_dbus.patch
 
 BuildRequires:  python-devel
 BuildRequires:  desktop-file-utils
@@ -86,6 +88,7 @@ their shows with them.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 # /Patches
 
 
@@ -142,6 +145,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Fri Mar  2 2012 Michel Salim <salimma@fedoraproject.org> - 4.0.6-3
+- Apply upstream patch for terminating DBus after running unit tests
+
 * Wed Feb  8 2012 Michel Salim <salimma@fedoraproject.org> - 4.0.6-2
 - Add GPLv2 to license field (for miro-segmenter)
 - Remove old upgrade path for Democracy package
