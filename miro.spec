@@ -4,8 +4,8 @@
 %bcond_with check
 
 Name:           miro
-Version:        4.0.6
-Release:        3%{?dist}
+Version:        5.0
+Release:        1%{?dist}
 Summary:        Internet TV Player
 
 Group:          Applications/Multimedia
@@ -15,24 +15,18 @@ URL:            http://www.getmiro.com/
 Source0:        http://ftp.osuosl.org/pub/pculture.org/miro/src/miro-%{version}.tar.gz
 # explains video conversion issues
 # Source1:        README.Fedora
-# from upstream, fixes their issue # 17817
-Patch0:         miro-4.0.2-change_timeout.patch
 # handle non-existent iTunes path exception
 # submitted: http://bugzilla.pculture.org/show_bug.cgi?id=17925
-Patch1:         miro-4.0.2-fix_itunes_path.patch
+Patch0:         miro-4.0.2-fix_itunes_path.patch
 # fix desktop file
 # submitted: http://bugzilla.pculture.org/show_bug.cgi?id=17926
-Patch2:         miro-4.0.2-fix_desktop_file.patch
+Patch1:         miro-4.0.2-fix_desktop_file.patch
 # fix GNOME screensaver not being inhibitable
 # submitted: http://bugzilla.pculture.org/show_bug.cgi?id=18018
-Patch3:         miro-4.0.2.1-fix_screensaver_inhibit.patch
-# Use provided CFLAGS when building miro-segmenter
-# submitted: https://bugzilla.pculture.org/show_bug.cgi?id=18027
-Patch4:         miro-4.0.2.1-segmenter_cflags.patch
-# terminate DBus after running unit tests
-Patch5:         miro-4.0.6-terminate_dbus.patch
+Patch2:         miro-4.0.2.1-fix_screensaver_inhibit.patch
 
 BuildRequires:  python-devel
+BuildRequires:	boost-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel
 BuildRequires:  gettext
@@ -44,11 +38,12 @@ BuildRequires:  webkitgtk-devel
 %if %{with check}
 BuildRequires:  dbus-x11
 BuildRequires:  dbus-python
+BuildRequires:	ffmpeg
 BuildRequires:  GConf2
-BuildRequires:  python-mutagen
 BuildRequires:  gnome-python2-gconf
 BuildRequires:  gstreamer-plugins-good
 BuildRequires:  gstreamer-python
+BuildRequires:  python-mutagen
 BuildRequires:  python-pycurl
 BuildRequires:  pywebkitgtk
 BuildRequires:  rb_libtorrent-python
@@ -58,7 +53,8 @@ BuildRequires:  Xvfb xauth
 Requires:       avahi-compat-libdns_sd
 Requires:       dbus-python
 Requires:       dbus-x11
-Requires:       ffmpeg2theora
+Requires:	ffmpeg
+#Requires:       ffmpeg2theora
 Requires:       GConf2
 Requires:       gnome-python2-gconf
 Requires:       gstreamer-plugins-good
@@ -93,9 +89,6 @@ their shows with them.
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
 # /Patches
 
 
@@ -154,6 +147,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Fri May  4 2012 Michel Salim <salimma@fedoraproject.org> - 5.0-1
+- Update to 5.0
+
 * Fri Mar  2 2012 Michel Salim <salimma@fedoraproject.org> - 4.0.6-3
 - Apply upstream patch for terminating DBus after running unit tests
 - Disable tests by default; rebuild with --with check to override
