@@ -26,19 +26,20 @@ Patch1:         miro-4.0.2-fix_desktop_file.patch
 Patch2:         miro-4.0.2.1-fix_screensaver_inhibit.patch
 
 BuildRequires:  python-devel
-BuildRequires:	boost-devel
+BuildRequires:  boost-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel
 BuildRequires:  gettext
 BuildRequires:  Pyrex
 BuildRequires:  pygtk2-devel
+BuildRequires:  taglib-devel
 BuildRequires:  webkitgtk-devel
 
 # for testing
 %if %{with check}
 BuildRequires:  dbus-x11
 BuildRequires:  dbus-python
-BuildRequires:	ffmpeg
+BuildRequires:  ffmpeg
 BuildRequires:  GConf2
 BuildRequires:  gnome-python2-gconf
 BuildRequires:  gstreamer-plugins-good
@@ -53,7 +54,7 @@ BuildRequires:  Xvfb xauth
 Requires:       avahi-compat-libdns_sd
 Requires:       dbus-python
 Requires:       dbus-x11
-Requires:	ffmpeg
+Requires:       ffmpeg
 #Requires:       ffmpeg2theora
 Requires:       GConf2
 Requires:       gnome-python2-gconf
