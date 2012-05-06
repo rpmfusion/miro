@@ -5,7 +5,7 @@
 
 Name:           miro
 Version:        5.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Internet TV Player
 
 Group:          Applications/Multimedia
@@ -25,6 +25,9 @@ Patch1:         miro-4.0.2-fix_desktop_file.patch
 # submitted: http://bugzilla.pculture.org/show_bug.cgi?id=18018
 Patch2:         miro-4.0.2.1-fix_screensaver_inhibit.patch
 
+# Miro is temporarily using pre-built codegen binaries
+# available only on these two platforms
+ExclusiveArch:  i686 x86_64
 BuildRequires:  python-devel
 BuildRequires:  boost-devel
 BuildRequires:  desktop-file-utils
@@ -134,7 +137,15 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %files -f linux/miro.lang
-%{_bindir}/*
+%{_bindir}/miro*
+%ifarch x86_64
+%exclude %{_bindir}/codegen.Linux-i686
+%{_bindir}/codegen.Linux-x86_64
+%else
+%{_bindir}/codegen.Linux-i686
+%exclude %{_bindir}/codegen.Linux-x86_64
+%endif
+%{_bindir}/echoprint-codegen
 %exclude %{_datadir}/miro/resources/testdata
 %{_datadir}/miro
 %{_datadir}/icons/hicolor/*/apps/*
@@ -148,6 +159,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Sat May  5 2012 Michel Salim <salimma@fedoraproject.org> - 5.0-2
+- Only ship the platform-specific codegen binary
+
 * Fri May  4 2012 Michel Salim <salimma@fedoraproject.org> - 5.0-1
 - Update to 5.0
 
