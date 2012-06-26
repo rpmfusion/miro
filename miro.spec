@@ -5,7 +5,7 @@
 
 Name:           miro
 Version:        5.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Internet TV Player
 
 Group:          Applications/Multimedia
@@ -159,6 +159,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Tue Jun 26 2012 Nicolas Chauvet <kwizart@gmail.com> - 5.0-3
+- Rebuilt for FFmpeg
+
 * Sat May  5 2012 Michel Salim <salimma@fedoraproject.org> - 5.0-2
 - Only ship the platform-specific codegen binary
 
