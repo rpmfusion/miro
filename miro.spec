@@ -4,8 +4,8 @@
 %bcond_with check
 
 Name:           miro
-Version:        5.0
-Release:        2%{?dist}
+Version:        5.0.2
+Release:        1%{?dist}
 Summary:        Internet TV Player
 
 Group:          Applications/Multimedia
@@ -159,6 +159,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Tue Aug  7 2012 Michel Salim <salimma@fedoraproject.org> - 5.0.2-1
+- Update to 5.0.2
+
 * Sat May  5 2012 Michel Salim <salimma@fedoraproject.org> - 5.0-2
 - Only ship the platform-specific codegen binary
 
