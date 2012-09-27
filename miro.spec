@@ -5,7 +5,7 @@
 
 Name:           miro
 Version:        5.0.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Internet TV Player
 
 Group:          Applications/Multimedia
@@ -24,6 +24,10 @@ Patch1:         miro-4.0.2-fix_desktop_file.patch
 # fix GNOME screensaver not being inhibitable
 # submitted: http://bugzilla.pculture.org/show_bug.cgi?id=18018
 Patch2:         miro-4.0.2.1-fix_screensaver_inhibit.patch
+# Don't install pre-built codegen binaries
+Patch3:         miro-5.0.2-no_bundled.patch
+# Backport miro-segmenter changes for building with new FFmpeg
+Patch4:         miro-5.0.2-fix_ffmpeg.patch
 
 # Miro is temporarily using pre-built codegen binaries
 # available only on these two platforms
@@ -93,6 +97,10 @@ their shows with them.
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
+%if 0%{?fedora} >= 18
+%patch4 -p0
+%endif
 # /Patches
 
 
@@ -138,13 +146,6 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files -f linux/miro.lang
 %{_bindir}/miro*
-%ifarch x86_64
-%exclude %{_bindir}/codegen.Linux-i686
-%{_bindir}/codegen.Linux-x86_64
-%else
-%{_bindir}/codegen.Linux-i686
-%exclude %{_bindir}/codegen.Linux-x86_64
-%endif
 %{_bindir}/echoprint-codegen
 %exclude %{_datadir}/miro/resources/testdata
 %{_datadir}/miro
@@ -159,6 +160,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Wed Sep 26 2012 Michel Salim <salimma@fedoraproject.org> - 5.0.2-2
+- Avoid shipping pre-built codegen binary
+
 * Tue Aug  7 2012 Michel Salim <salimma@fedoraproject.org> - 5.0.2-1
 - Update to 5.0.2
 
