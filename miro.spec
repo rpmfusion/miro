@@ -5,7 +5,7 @@
 
 Name:           miro
 Version:        5.0.4
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Internet TV Player
 
 Group:          Applications/Multimedia
@@ -160,6 +160,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Sun May 26 2013 Nicolas Chauvet <kwizart@gmail.com> - 5.0.4-4
+- Rebuilt for x264/FFmpeg
+
 * Wed Jan 30 2013 Nicolas Chauvet <kwizart@gmail.com> - 5.0.4-3
 - Rebuilt for ffmpeg
 
